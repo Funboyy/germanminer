@@ -34,7 +34,7 @@ public class VehicleDisplayWidget extends WidgetHudWidget<HudWidgetConfig>
 
   private final GermanMinerAddon addon;
   private final Icon hudWidgetIcon;
-  private VehicleDisplayContent content;
+  private final VehicleDisplayContent content;
 
   private boolean show;
   private boolean nightMode;
@@ -50,6 +50,7 @@ public class VehicleDisplayWidget extends WidgetHudWidget<HudWidgetConfig>
 
     this.addon = addon;
     this.hudWidgetIcon = WidgetIcon.VEHICLE_DISPLAY.getIcon();
+    this.content = new VehicleDisplayContent();
   }
 
   @Override
@@ -64,7 +65,6 @@ public class VehicleDisplayWidget extends WidgetHudWidget<HudWidgetConfig>
   public void initialize(final HudWidgetWidget widget) {
     super.initialize(widget);
 
-    this.content = new VehicleDisplayContent();
     widget.addChild(this.content);
   }
 

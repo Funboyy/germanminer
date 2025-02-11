@@ -40,6 +40,7 @@ public class InputPromptActivity extends Activity {
     this.onCancel = onCancel;
   }
 
+  @Override
   public void initialize(final Parent parent) {
     super.initialize(parent);
 
