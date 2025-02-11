@@ -26,7 +26,7 @@ labyMod {
         displayName = "GermanMiner"
         author = "Funboyy, JensausNGL"
         description = "Unofficial addon to improve various functions on the real-life server GermanMiner"
-        minecraftVersion = "1.12.2"
+        minecraftVersion = "1.12.2,1.21.3"
         version = rootProject.version.toString()
     }
 }

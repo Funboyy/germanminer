@@ -1,4 +1,4 @@
-package de.germanminer.addon.v1_12_2;
+package de.germanminer.addon.v1_21_3;
 
 import de.germanminer.addon.api.vehicle.Vehicle;
 import de.germanminer.addon.controller.VehicleController;
@@ -7,9 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityTracker;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.Entity;
 
 @Singleton
 @Implements(VehicleController.class)
@@ -21,19 +20,19 @@ public class VersionedVehicleController extends VehicleController {
 
   @Override
   public void fixVehicles(final List<Vehicle> vehicles) {
-    final WorldClient world = Minecraft.getMinecraft().world;
+    final ClientLevel level = Minecraft.getInstance().level;
 
-    if (world == null) {
+    if (level == null) {
       return;
     }
 
     vehicles.forEach(vehicle -> {
-      final Entity entity = world.getEntityByID(vehicle.getEntityId());
+      final Entity entity = level.getEntity(vehicle.getEntityId());
 
       if (entity != null) {
-        EntityTracker.updateServerPosition(entity, vehicle.getX(), vehicle.getY(), vehicle.getZ());
-        entity.setPositionAndRotationDirect(vehicle.getX(), vehicle.getY(), vehicle.getZ(),
-            vehicle.getYaw(), vehicle.getPitch(), 3, true);
+        entity.syncPacketPositionCodec(vehicle.getX(), vehicle.getY(), vehicle.getZ());
+        entity.lerpTo(vehicle.getX(), vehicle.getY(), vehicle.getZ(),
+            vehicle.getYaw(), vehicle.getPitch(), 3);
       }
     });
   }
